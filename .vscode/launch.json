@@ -20,7 +20,8 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "sourceFileMap": {
-				"/app/paraview-build": "${workspaceRoot}/build"
+                "/app/paraview-build/superbuild/paraview/src/VTK": "${workspaceRoot}/VTK",
+                "/app/paraview-build": "${workspaceRoot}/build",
 			},
             "setupCommands": [
                 {
