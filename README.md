@@ -13,7 +13,7 @@ UID=${UID} GID=${GID} docker-compose run paraview_dev bash
 ```
 UID=${UID} GID=${GID} docker-compose build --build-arg VTK_TAG=<VTK_COMMIT_TO_USE> paraview_release
 
-ID=${UID} GID=${GID} docker-compose run --rm paraview_release
+UID=${UID} GID=${GID} docker-compose run --rm paraview_release
 ```
 
 ## Useful Resources
