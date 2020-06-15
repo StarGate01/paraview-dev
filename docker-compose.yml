@@ -1,8 +1,10 @@
-version: '3'
+version: '3.5'
 
 services:
   paraview_dev:
-    build: .
+    build: 
+      context: .
+      target: base
     volumes:
       - "./build:/app/paraview-build:rw"
       - "./VTK:/app/paraview-build/superbuild/paraview/src/VTK:ro"
@@ -10,7 +12,7 @@ services:
       - "./test:/app/test:rw"
       - "/:/host:ro"
     environment: 
-      - DISPLAY=localhost:10.0
+      - DISPLAY=localhost:11.0
     ports:
       - "2000:2000"
     cap_add:
@@ -19,3 +21,11 @@ services:
       - seccomp:unconfined
     user: "${UID}:${GID}"
     network_mode: "host"
+
+  paraview_release:
+    build: 
+      context: .
+      target: release
+    volumes:
+      - "./release:/app/release:rw"
+    entrypoint: "/bin/bash -c 'cp /app/*.tar.gz /app/release'"
