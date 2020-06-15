@@ -6,6 +6,7 @@ services:
     volumes:
       - "./build:/app/paraview-build:rw"
       - "~/.Xauthority:/home/pvbuilder/.Xauthority:ro"
+      - "./test:/app/test:ro"
       - "/:/host:ro"
     environment: 
       - DISPLAY=localhost:10.0
