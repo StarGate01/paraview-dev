@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  paraview_dev:
+    build: .
+    volumes:
+      - "./build:/app/paraview-build:rw"
+      - "~/.Xauthority:/home/pvbuilder/.Xauthority:ro"
+      - "/:/host:ro"
+    environment: 
+      - DISPLAY=localhost:10.0
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    user: "${UID}:${GID}"
+    network_mode: "host"
