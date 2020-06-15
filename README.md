@@ -1,14 +1,14 @@
-# ParaView development environment
+# ParaView Development Environment
 
-This image builds ParaView with a Fork of VTK (https://gitlab.kitware.com/ChristophHonal/vtk/-/tree/xdmf3-highorder), which aims to enable high-order finite-element functions in XDMF.
+This image builds ParaView with a fork of VTK (https://gitlab.kitware.com/ChristophHonal/vtk/-/tree/xdmf3-highorder), which aims to enable high-order finite-element functions in XDMF.
 
-### Create Debug environment
+### Create Debug Environment
 
 ```
 UID=${UID} GID=${GID} docker-compose run paraview_dev bash
 ```
 
-### Build and Copy Release package
+### Build and Copy Release Package
 
 ```
 UID=${UID} GID=${GID} docker-compose build --build-arg VTK_TAG=<VTK_COMMIT_TO_USE> paraview_release
@@ -16,7 +16,7 @@ UID=${UID} GID=${GID} docker-compose build --build-arg VTK_TAG=<VTK_COMMIT_TO_US
 ID=${UID} GID=${GID} docker-compose run --rm paraview_release
 ```
 
-## Useful resources
+## Useful Resources
 
 - https://www.paraview.org/
 - https://github.com/michalhabera/gsoc-summary
