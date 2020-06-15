@@ -6,7 +6,7 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "UID=${UID} GID=${GID} docker-compose run paraview_dev",
+            "command": "UID=${UID} GID=${GID} docker-compose run --rm --entrypoint '/bin/bash -c \"cd /app/paraview-build && rm -f superbuild/paraview/stamp/paraview-build && make\"' paraview_dev",
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": ["relative", "${workspaceFolder}/build/"],
@@ -24,6 +24,21 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Launch",
+            "type": "shell",
+            "command": "UID=${UID} GID=${GID} docker-compose run --rm --entrypoint '/bin/bash -c \"cd /app/paraview-build && ./install/bin/paraview\"' paraview_dev",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Launch-Debugserver",
+            "type": "shell",
+            "command": "UID=${UID} GID=${GID} docker-compose run --rm -d --entrypoint '/bin/bash -c \"cd /app/paraview-build && gdbserver :2000 ./install/bin/paraview\"' paraview_dev",
+            "group": "test"
         }
     ]
 }

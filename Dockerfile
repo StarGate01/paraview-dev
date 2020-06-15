@@ -30,8 +30,4 @@ RUN git clone --recursive https://gitlab.kitware.com/paraview/paraview-superbuil
 # GDB server
 EXPOSE 2000
 
-# Recompilation and Debugging entrypoint
-ENTRYPOINT [ "/bin/bash", "-c", "cd /app/paraview-build && rm -f superbuild/paraview/stamp/paraview-build && make && gdbserver :2000 ./install/bin/paraview" ]
-
-
 # cmake ../paraview-superbuild -DENABLE_xdmf3=1 -DENABLE_qt5=1 -DENABLE_mpi=1 -DENABLE_hdf5=1 -DUSE_SYSTEM_qt5=1 -DUSE_SYSTEM_mpi=1 -DSUPERBUILD_ALLOW_DEBUG=1 -DCMAKE_BUILD_TYPE_paraview=Debug
