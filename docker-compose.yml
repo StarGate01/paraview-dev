@@ -28,4 +28,4 @@ services:
       target: release
     volumes:
       - "./release:/app/release:rw"
-    entrypoint: "/bin/bash -c 'cp /app/*.tar.gz /app/release'"
+    entrypoint: "/bin/bash -c 'cp -f /app/*.tar.gz /app/release'"
