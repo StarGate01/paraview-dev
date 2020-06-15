@@ -1,0 +1,4 @@
+[submodule "VTK"]
+	path = VTK
+	url = git@gitlab.kitware.com:ChristophHonal/vtk.git
+	branch = xdmf3-highorder

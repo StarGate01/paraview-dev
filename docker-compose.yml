@@ -5,11 +5,14 @@ services:
     build: .
     volumes:
       - "./build:/app/paraview-build:rw"
+      - "./VTK:/app/paraview-build/superbuild/paraview/src/VTK:ro"
       - "~/.Xauthority:/home/pvbuilder/.Xauthority:ro"
-      - "./test:/app/test:ro"
+      - "./test:/app/test:rw"
       - "/:/host:ro"
     environment: 
       - DISPLAY=localhost:10.0
+    ports:
+      - "2000:2000"
     cap_add:
       - SYS_PTRACE
     security_opt:
