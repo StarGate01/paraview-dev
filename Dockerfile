@@ -7,18 +7,22 @@ ENV TZ=Europe/Berlin
 # Package dependencies
 RUN apt-get -y update && apt-get -y upgrade && \
     apt-get -y install \
-        bash git \
+        bash git wget fuse \
         cmake build-essential autotools-dev autoconf pkg-config \
         g++ gfortran gdb gdbserver \
-        libpthread-stubs0-dev qt5-default qttools5-dev qttools5-dev-tools libqt5svg5-dev libqt5xmlpatterns5-dev qtxmlpatterns5-dev-tools \
+        libpthread-stubs0-dev python \
         xorg mesa-common-dev libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev mesa-utils && \
     rm -rf /var/lib/apt/lists/*
 
-# User
-RUN groupadd -g 1000 pvbuilder && \
-    useradd -r -u 1000 -g pvbuilder pvbuilder && \
-    mkdir -p /app && \
-    chown -R pvbuilder:pvbuilder /app
+# User and FUSE
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g "${UID}" pvbuilder && \
+    useradd -r -u "${GID}" -g pvbuilder pvbuilder && \
+    mkdir -p /app/paraview-build && \
+    chown -R pvbuilder:pvbuilder /app && \
+    groupadd fuse && \
+    usermod -a -G fuse pvbuilder
 USER pvbuilder
 
 # Paraview Superbuild
@@ -27,32 +31,55 @@ RUN git clone --recursive https://gitlab.kitware.com/paraview/paraview-superbuil
     cd paraview-superbuild && \
     git fetch origin && git checkout v5.8.0 && git submodule update
 
-# GDB server # -DSUPERBUILD_ALLOW_DEBUG=1 -DCMAKE_BUILD_TYPE_paraview=Debug
-EXPOSE 2000
+# Download and precompile sources
+WORKDIR /app/paraview-build
+RUN cmake --parallel=$(nproc) ../paraview-superbuild -DENABLE_xdmf3=1 -DENABLE_python3=1 -DENABLE_matplotlib=1 -DENABLE_numpy=1 \
+        -DENABLE_qt5=1 -DENABLE_mpi=1 -DENABLE_hdf5=1 && \
+    make download-all && \
+    find /app/paraview-build -mindepth 1 -maxdepth 1 ! -name 'downloads' -exec rm -rf {} \;
 
 
-# Image for automatic compiling
+# Image for release image
 FROM base AS release
 
-# Compile components
-RUN mkdir -p /app/paraview-build
+# Dependencies
+WORKDIR /app
+RUN wget "https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage" && \
+    chmod +x appimagetool-x86_64.AppImage
+
 WORKDIR /app/paraview-build
-RUN cmake ../paraview-superbuild -DENABLE_xdmf3=1 -DENABLE_python3=1 -DENABLE_matplotlib=1 -DENABLE_numpy=1 \
-        -DENABLE_qt5=1 -DENABLE_mpi=1 -DENABLE_hdf5=1 -DUSE_SYSTEM_qt5=1 -DCMAKE_BUILD_TYPE=Release && \
+RUN cmake --parallel=$(nproc) ../paraview-superbuild -DENABLE_xdmf3=1 -DENABLE_python3=1 -DENABLE_matplotlib=1 -DENABLE_numpy=1 \
+        -DENABLE_qt5=1 -DENABLE_mpi=1 -DENABLE_hdf5=1 -DCMAKE_BUILD_TYPE=Release && \
     make download-all && \
     rm -rf superbuild/paraview/src/VTK && \
     git clone --single-branch --branch="xdmf3-highorder" --depth=1 https://gitlab.kitware.com/ChristophHonal/vtk.git superbuild/paraview/src/VTK && \
-    make
-  
-# Update VTK and recompile paraview
-ARG VTK_TAG="d03ecb1f25d1d94840280bc678150175f8879ecb"
-RUN cd superbuild/paraview/src/VTK && \
-    git pull && \
-    git checkout "$VTK_TAG" && \
-    cd /app/paraview-build && \
-    rm -f superbuild/paraview/stamp/paraview-build && \
-    make
+    make -j$(nproc)
 
 # Pack assets
-RUN cd /app/paraview-build/install && \
-    tar -zcvf /app/paraview-5.8.0-xdmf3-highorder-release.tar.gz .
+COPY tools/AppRun tools/paraview-xdmf3-highorder.desktop tools/paraview-xdmf3-highorder.png /app/paraview-build/install/
+COPY tools/paraview-xdmf3-highorder.appdata.xml /app/paraview-build/install/usr/share/metainfo/
+
+# Update and repompile git VTK and pack AppImage
+COPY tools/release.sh /app/
+ENTRYPOINT [ "/app/release.sh" ] 
+
+
+# Image for debugging
+FROM base as debug
+
+# Reconfigure and recompile for debugging
+WORKDIR /app/paraview-build
+RUN cmake --parallel=$(nproc) ../paraview-superbuild -DENABLE_xdmf3=1 -DENABLE_python3=1 -DENABLE_matplotlib=1 -DENABLE_numpy=1 \
+        -DENABLE_qt5=1 -DENABLE_mpi=1 -DENABLE_hdf5=1 -DSUPERBUILD_ALLOW_DEBUG=1 -DCMAKE_BUILD_TYPE_paraview=Debug && \
+    make download-all && \
+    rm -rf superbuild/paraview/src/VTK && \
+    git clone --single-branch --branch="xdmf3-highorder" --depth=1 https://gitlab.kitware.com/ChristophHonal/vtk.git superbuild/paraview/src/VTK && \
+    make -j$(nproc) && \
+    mv /app/paraview-build /app/paraview-build.backup
+
+# GDB server
+EXPOSE 2000
+
+# Recompile sources
+COPY tools/debug.sh /app/
+ENTRYPOINT [ "/app/debug.sh" ]

@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build",
+            "label": "Debug Build",
             "type": "shell",
-            "command": "UID=${UID} GID=${GID} docker-compose run --rm --entrypoint '/bin/bash -c \"cd /app/paraview-build && rm -f superbuild/paraview/stamp/paraview-build && make\"' paraview_dev",
+            "command": "UID=${UID} GID=${GID} docker-compose run --rm paraview_debug",
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": ["relative", "${workspaceFolder}/build/"],
@@ -26,9 +26,28 @@
             }
         },
         {
+            "label": "Release Build",
+            "type": "shell",
+            "command": "UID=${UID} GID=${GID} docker-compose run --rm paraview_release",
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": ["relative", "${workspaceFolder}/build/"],
+                "pattern": {
+                  "regexp": "^/app/paraview-build/(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                  "file": 1,
+                  "line": 2,
+                  "column": 3,
+                  "severity": 4,
+                  "message": 5
+                },
+                "source": "gcc-docker"
+            },
+            "group": "build"
+        },
+        {
             "label": "Launch",
             "type": "shell",
-            "command": "UID=${UID} GID=${GID} docker-compose run --rm --entrypoint '/bin/bash -c \"cd /app/paraview-build && ./install/bin/paraview\"' paraview_dev",
+            "command": "UID=${UID} GID=${GID} docker-compose run --rm --entrypoint /app/paraview-build/install/bin/paraview paraview_debug",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -37,7 +56,7 @@
         {
             "label": "Launch-Debugserver",
             "type": "shell",
-            "command": "UID=${UID} GID=${GID} docker-compose run --rm -d --entrypoint '/bin/bash -c \"cd /app/paraview-build && gdbserver :2000 ./install/bin/paraview\"' paraview_dev",
+            "command": "UID=${UID} GID=${GID} docker-compose run --rm -d  --entrypoint 'gdbserver :2000 /app/paraview-build/install/bin/paraview' paraview_debug",
             "group": "test"
         }
     ]

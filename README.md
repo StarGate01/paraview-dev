@@ -5,15 +5,15 @@ This image builds ParaView with a fork of VTK (https://gitlab.kitware.com/Christ
 ### Create Debug Environment
 
 ```
-UID=${UID} GID=${GID} docker-compose run paraview_dev bash
+UID=$UID GID=$GID docker-compose run paraview_dev bash
 ```
 
 ### Build and Copy Release Package
 
 ```
-UID=${UID} GID=${GID} docker-compose build --build-arg VTK_TAG=<VTK_COMMIT_TO_USE> paraview_release
+UID=$UID GID=$GID docker-compose build paraview_release
 
-UID=${UID} GID=${GID} docker-compose run --rm paraview_release
+UID=$UID GID=$GID docker-compose run --rm paraview_release
 ```
 
 ## Useful Resources

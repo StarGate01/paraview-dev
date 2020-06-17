@@ -1,10 +1,13 @@
 version: '3.5'
 
 services:
-  paraview_dev:
+  paraview_debug:
     build: 
       context: .
-      target: base
+      target: debug
+      args:
+        - GID=${UID}
+        - UID=${UID}
     volumes:
       - "./build:/app/paraview-build:rw"
       - "./VTK:/app/paraview-build/superbuild/paraview/src/VTK:ro"
@@ -15,10 +18,6 @@ services:
       - DISPLAY=localhost:11.0
     ports:
       - "2000:2000"
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - seccomp:unconfined
     user: "${UID}:${GID}"
     network_mode: "host"
 
@@ -26,6 +25,15 @@ services:
     build: 
       context: .
       target: release
+      args:
+        - GID=${UID}
+        - UID=${UID}
     volumes:
       - "./release:/app/release:rw"
-    entrypoint: "/bin/bash -c 'cp -f /app/*.tar.gz /app/release'"
+    cap_add:
+      - SYS_ADMIN
+    devices: 
+      - "/dev/fuse"
+    security_opt: 
+      - "apparmor:unconfined"
+    user: "${UID}:${GID}"

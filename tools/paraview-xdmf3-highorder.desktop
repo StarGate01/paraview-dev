@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=ParaView-XDMF3-Highorder
+Exec=AppRun
+Icon=paraview-xdmf3-highorder
+Categories=Science;

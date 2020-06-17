@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>paraview-xdmf3-highorder</id>
+	<metadata_license>BSD-3-Clause</metadata_license>
+	<project_license>BSD-3-Clause</project_license>
+	<name>ParaView-XDMF3-Highorder</name>
+	<summary>Parallel visualization application with support for XDMF3 high-order functions</summary>
+	<description>
+		<p>Parallel visualization application with support for XDMF3 high-order functions. Built with a fork of VTK: https://gitlab.kitware.com/ChristophHonal/vtk/-/tree/xdmf3-highorder</p>
+	</description>
+	<launchable type="desktop-id">paraview-xdmf3-highorder.desktop</launchable>
+	<url type="homepage">https://www.paraview.org/</url>
+	<screenshots>
+		<screenshot type="default">
+			<image>https://raw.githubusercontent.com/StarGate01/paraview-dev/master/test/dg_3_demo.png</image>
+		</screenshot>
+	</screenshots>
+	<provides>
+		<id>paraview-xdmf3-highorder.desktop</id>
+	</provides>
+</component>

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+export APPDIR="$(dirname "$(readlink -f "$0")")"
+export PATH="$APPDIR/bin/:$PATH"
+export LD_LIBRARY_PATH="$APPDIR/lib:$LD_LIBRARY_PATH"
+export XDG_DATA_DIRS="$APPDIR:$APPDIR/share/:/usr/share/:$XDG_DATA_DIRS"
+
+export QT_QPA_PLATFORM_PLUGIN_PATH="$APPDIR/plugins/platforms"
+export QT_PLUGIN_PATH="$APPDIR/plugins"
+export QML2_IMPORT_PATH="$APPDIR/qml"
+
+"$APPDIR"/bin/paraview $@
