@@ -16,6 +16,13 @@ UID=$UID GID=$GID docker-compose build paraview_release
 UID=$UID GID=$GID docker-compose run --rm paraview_release
 ```
 
+## FE Config
+
+DG_X_Y
+
+- X: Point order, V = Continuous VTK, R = Continuous Row, E = Explicit
+- Y: DOFs, V = Continuous VTK, R = Continuous Row, E = Explicit, D = Default equidistant
+
 ## Useful Resources
 
 - https://www.paraview.org/

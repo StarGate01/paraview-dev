@@ -9,9 +9,9 @@
             "command": "UID=${UID} GID=${GID} docker-compose run --rm paraview_debug",
             "problemMatcher": {
                 "owner": "cpp",
-                "fileLocation": ["relative", "${workspaceFolder}/build/"],
+                "fileLocation": ["relative", "${workspaceFolder}/VTK"],
                 "pattern": {
-                  "regexp": "^/app/paraview-build/(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                  "regexp": "^/app/paraview-build/superbuild/paraview/src/VTK/(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
                   "file": 1,
                   "line": 2,
                   "column": 3,
@@ -31,9 +31,9 @@
             "command": "UID=${UID} GID=${GID} docker-compose run --rm paraview_release",
             "problemMatcher": {
                 "owner": "cpp",
-                "fileLocation": ["relative", "${workspaceFolder}/build/"],
+                "fileLocation": ["relative", "${workspaceFolder}/VTK"],
                 "pattern": {
-                  "regexp": "^/app/paraview-build/(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                  "regexp": "^/app/paraview-build/superbuild/paraview/src/VTK/(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
                   "file": 1,
                   "line": 2,
                   "column": 3,

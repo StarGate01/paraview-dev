@@ -15,7 +15,7 @@
             "program": "${workspaceRoot}/build/install/bin/paraview",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/build",
+            "cwd": "${workspaceRoot}/test",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
