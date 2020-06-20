@@ -1,7 +1,9 @@
 
 # Implementing support for high-order finite-element functions in XDMF3 for ParaView using VTK lagrange cells
 
-First of all, any help is appreciated!
+![DG 10](https://raw.githubusercontent.com/StarGate01/paraview-dev/master/test/images/results/dg_10.png)
+
+**First of all, any help is appreciated!**
 
 ## Timeline
 
@@ -92,6 +94,10 @@ Light blue: Triangle vertex indices, dark blue: DOF indices. For more info on th
 ## Barycentric Coordinates
 
 The positions of the DOFs are specified in barycentric coordinates. See https://en.wikipedia.org/wiki/Barycentric_coordinate_system for more info. The nth coordinate relates to edge which is opposite of the nth vertex of the triangle.
+
+## ParaView
+
+In ParaView, you can use the *"Nonlinear Subdivision Level"* Slider in the advanced properties (click the little gear icon) to generate more geometry and smooth the cell.
 
 # Development
 
