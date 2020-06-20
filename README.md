@@ -69,11 +69,17 @@ The `ElementFamily` attribute has been extended to contain information not only 
 - `EV` (*"Explicit VTK"*, **+2** `DataItem`s): The first `DataItem` is assumed to contain indices for the second `DataItem`, which contains the DOF values. The values obtained are assumed to be in VTK order [5].
 - `ER` (*"Explicit Row"*, **+2** `DataItem`s): The first `DataItem` is assumed to contain indices for the second `DataItem`, which contains the DOF values. The values obtained are assumed to be in row order.
 
+If a vector or tensor value is given in a lower dimension than 3, It will be padded with zeros.
+
 `ZZ`, the DOF position layout parameter, may be:
 - `CV`, `CR`, `EV`, `ER`: The same as above, but in relation to the `DataItem`s which come after the `DataItem`s of the DOF values.
 - `D` (*"Default"*, **+0** `DataItem`s): No `DataItem`s have to be specified, and all DOFs will be spaced equidistantly over the cell automatically.
 
 If the DOF position buffers are shorter than the DOF value buffers, they will loop around. This means that when the DOF positions are specified for only one cell, they will apply to all cells, conserving storage space.
+
+## Point Order
+
+Unlike the previous implementation, which used a custom point order, this one uses VTK or row ordering.
 
 # Development
 

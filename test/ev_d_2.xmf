@@ -18,37 +18,13 @@
                     </DataItem>
                 </Geometry>
 
-                <Attribute Name="Test" ItemType="FiniteElementFunction" ElementFamily="DG" ElementDegree="3" ElementCell="triangle" Center="Other" AttributeType="Scalar">
+                <Attribute Name="Test" ItemType="FiniteElementFunctionLagrange" ElementFamily="DG_EV_D" ElementDegree="2" ElementCell="triangle" Center="Other" AttributeType="Scalar">
                     <DataItem Format="XML" NumberType="Int" Dimensions="6 1">
-                        0 1 2 3 4 5 6 7 8 9
+                        0 1 2 3 4 5
                     </DataItem>
                     <DataItem Format="XML" NumberType="Float" Precision="8" Dimensions="6 1">
-                        1
-                        1
-                        1
-                        0
-                        2
-                        0
-                        2
-                        0
-                        2
-                        -1
-                    </DataItem>
-                    <DataItem Format="XML" NumberType="Float" Precision="8" Dimensions="6 3">
-                        1 0 0
-                        0 1 0
-                        0 0 1
-
-                        0.66 0.33 0
-                        0.2 0.8 0
-                        
-                        0 0.66 0.33
-                        0 0.33 0.66
-
-                        0.33 0 0.66
-                        0.66 0 0.33
-
-                        0.33 0.5 0.33
+                        1 2 3 
+                        -1 -2 -3
                     </DataItem>
                 </Attribute>
             </Grid>
