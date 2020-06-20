@@ -20,8 +20,8 @@ UID=$UID GID=$GID docker-compose run --rm paraview_release
 
 DG_X_Y
 
-- X: Point order, V = Continuous VTK, R = Continuous Row, E = Explicit
-- Y: DOFs, V = Continuous VTK, R = Continuous Row, E = Explicit, D = Default equidistant
+- X: Point order, CV = Continuous VTK, CR = Continuous Row, EV, ER = Explicit
+- Y: DOFs, CV = Continuous VTK, CR = Continuous Row, EV, ER = Explicit, D = Default equidistant
 
 ## Useful Resources
 
