@@ -98,6 +98,8 @@ The positions of the DOFs are specified in barycentric coordinates. See https://
 
 In ParaView, you can use the *"Nonlinear Subdivision Level"* Slider in the advanced properties (click the little gear icon) to generate more geometry and smooth the cell.
 
+Also keep an eye on the standard error output stream of the ParaView process, any errors detected by the lagrange converter will be written there.
+
 # Development
 
 This image builds ParaView with a fork of VTK (https://gitlab.kitware.com/ChristophHonal/vtk/-/tree/xdmf3-highorder), which aims to enable high-order finite-element functions in XDMF.
