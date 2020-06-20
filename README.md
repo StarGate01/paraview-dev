@@ -1,6 +1,18 @@
 
 # Implementing support for high-order finite-element functions in XDMF3 for ParaView using VTK lagrange cells
 
+First of all, any help is appreciated!
+
+## Timeline
+
+- [x] Initial implementation
+- [x] First tests
+- [ ] Large-scale tests with HDF5
+- [ ] Feedback from the community
+- [ ] Merge into VTK mainline
+- [ ] Use in ParaView mainline
+- [ ] Update XDMF3 documentation
+- [ ] Add more cell types and/or methods
 
 ## Introduction
 
@@ -112,6 +124,17 @@ UID=$UID GID=$GID docker-compose run --rm paraview_release
 ```
 
 The compiled AppImage will be in `$(pwd)/release`, and include all dependencies like QT, HDF5 and Python.
+
+
+# Download
+
+A precompiled AppImage can be found here: https://syncandshare.lrz.de/getlink/fiJDmXw6f2aVLhsXUj3mbia4/paraview-5.8.0-xdmf3-highorder-release-x86_64.AppImage
+
+It will be updated when ever it is deemed necessary, and this URL will change.
+
+## Demo files
+
+XMF files for demonstration can be found in the `test` directory of this repository.
 
 # Sources / Thanks to
 
