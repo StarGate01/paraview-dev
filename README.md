@@ -47,7 +47,6 @@ Notable limitations are:
 Just like before, specify a XDMF3 attribute, but use the `FiniteElementFunctionLagrange` item type.
 
 ```
-
 <Attribute Name="Test" ItemType="FiniteElementFunctionLagrange"
     ElementFamily="XX_YY_ZZ" ElementDegree="4" ElementCell="triangle"
     Center="Other" AttributeType="Scalar">
