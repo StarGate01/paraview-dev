@@ -79,10 +79,21 @@ If the DOF position buffers are shorter than the DOF value buffers, they will lo
 
 ## Point Order
 
-Unlike the previous implementation, which used a custom point order, this one uses VTK or row ordering.
+Unlike the previous implementation, which used a custom point order, this one uses VTK or row ordering. Internally, as VTK requires VTK ordering, the row ordering is converted. The ordering works like this:
+
+**VTK Order:** (Degree 6)
+![VTK Order](https://raw.githubusercontent.com/StarGate01/paraview-dev/master/test/images/order/vtkorder.png)
+
+**Row Order:** (Degree 6)
+![Row Order](https://raw.githubusercontent.com/StarGate01/paraview-dev/master/test/images/order/roworder.png)
+
+Light blue: Triangle vertex indices, dark blue: DOF indices. For more info on the VTK ordering, see https://blog.kitware.com/modeling-arbitrary-order-lagrange-finite-elements-in-the-visualization-toolkit/ .
+
+## Barycentric Coordinates
+
+The positions of the DOFs are specified in barycentric coordinates. See https://en.wikipedia.org/wiki/Barycentric_coordinate_system for more info. The nth coordinate relates to edge which is opposite of the nth vertex of the triangle.
 
 # Development
-
 
 This image builds ParaView with a fork of VTK (https://gitlab.kitware.com/ChristophHonal/vtk/-/tree/xdmf3-highorder), which aims to enable high-order finite-element functions in XDMF.
 
