@@ -28,19 +28,24 @@ The existing implementation by *Michal Habera* [3] [7] provides a great starting
 
 The XML layout of the new `FiniteElementFunctionLagrange` ItemType is very similar to the existing `FiniteElementFunction` ItemType.
 
-Notable additions are:
+Notable new additions are:
 
 - Orders above 2 (up to 10 by default) are supported.
 - Both the DOF values and the barycentric positions of the DOFs may be specified.
 - Both data segments may be either - and independently from each other - explicitly indexed, or assumed to be continuous.
 - Data may be specified to be interpreted as VTK ordered, or row ordered.
 - DOF positions may be specified once for all cells int the attribute.
+- Multiple attributes on one cell are supported
 
-Notable limitations are:
+Notable new limitations are:
 
 - Only triangle cells are implemented for now, but more cell types (eg. tetrahedra) could be added without much effort.
 - Only the DG and CG methods are implemented for now.
-- Order 0 is not supported. The minimum order is 1. This is a limitation of VTK lagrange cells.
+- Order 0 (cell-based data) is not supported. The minimum order is 1 (node-based data). This is a limitation of VTK lagrange cells.
+
+Notable continued limitations are:
+
+- Non-intuitive behavior when using multiple attributes in one cell. See the section below for details.
 
 ## Usage
 
@@ -93,6 +98,16 @@ Light blue: Triangle vertex indices, dark blue: DOF indices. For more info on th
 ## Barycentric Coordinates
 
 The positions of the DOFs are specified in barycentric coordinates. See https://en.wikipedia.org/wiki/Barycentric_coordinate_system for more info. The nth coordinate relates to edge which is opposite of the nth vertex of the triangle.
+
+## Multiple Attributes per Cell
+
+The `FiniteElementFunctionLagrange` attributes actually modifies the geometry of the underlying cell. (So does the legacy `FiniteElementFunction`)
+
+Thus, when using multiple `FiniteElementFunctionLagrange` attributes, the DOF position specification of the last one will "win". This means that any preceding node-based attributes (cell-based attributes remain untouched, as they are kept in a separate buffer) will be wrongly re-positioned/re-mapped to the new DOFs. Also, non-finite-element attributes (simple value arrays) will be re-mapped to the new DOFs as well, instead of to the vertices they were intended for. As you can see, it is advisable to use `FiniteElementFunctionLagrange` for either *all* or *no* node attributes of a cell.
+
+Also, the degrees of the finite-element attributes may not be different from each other, as this would cause different amounts of DOFs in the cell, which would cause re-mapping as well.
+
+If you need cells with different degrees or DOF locations, group them into sets and create a `<Grid>` in a `<Grid GridType="Collection" CollectionType="Spatial">` collection for each set. If you need attributes with differing DOFs/degrees on the *same* cell, duplicate the cell in two different sets and use some filter in your visualization software to display the correct set.
 
 ## ParaView
 
