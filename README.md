@@ -9,7 +9,7 @@
 
 - [x] Initial implementation
 - [x] First tests
-- [ ] Large-scale tests with HDF5
+- [x] Large-scale tests with HDF5
 - [ ] Feedback from the community
 - [ ] Merge into VTK mainline
 - [ ] Use in ParaView mainline
