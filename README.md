@@ -36,6 +36,7 @@ Notable new additions are:
 - Data may be specified to be interpreted as VTK ordered, or row ordered.
 - DOF positions may be specified once for all cells int the attribute.
 - Multiple attributes on one cell are supported
+- Remove zero-padding on vectors, thus enabling 2D vectors and preventing inconsistencies with HDF5.
 
 Notable new limitations are:
 
@@ -75,7 +76,7 @@ The `ElementFamily` attribute has been extended to contain information not only 
 - `EV` (*"Explicit VTK"*, **+2** `DataItem`s): The first `DataItem` is assumed to contain indices for the second `DataItem`, which contains the DOF values. The values obtained are assumed to be in VTK order [5].
 - `ER` (*"Explicit Row"*, **+2** `DataItem`s): The first `DataItem` is assumed to contain indices for the second `DataItem`, which contains the DOF values. The values obtained are assumed to be in row order.
 
-If a vector or tensor value is given in a lower dimension than 3, It will be padded with zeros.
+If a vector may be given in a dimension lower or equal to 3.
 
 `ZZ`, the DOF position layout parameter, may be:
 - `CV`, `CR`, `EV`, `ER`: The same as above, but in relation to the `DataItem`s which come after the `DataItem`s of the DOF values.
