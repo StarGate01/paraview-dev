@@ -174,7 +174,7 @@ It will be updated when ever it is deemed necessary, and this URL will change.
 
 ## Demo files
 
-XMF files for demonstration can be found in the `test` directory of this repository.
+XMF files for demonstration can be found in the `test` directory of this repository. Some images can be found in the `test/images` directory.
 
 # Sources / Thanks to
 
