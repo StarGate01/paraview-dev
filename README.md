@@ -1,6 +1,8 @@
 
 # Implementing support for high-order finite-element functions in XDMF3 for ParaView using VTK lagrange cells
 
+![Coast](https://raw.githubusercontent.com/StarGate01/paraview-dev/master/test/images/results/coast.png)
+
 ![DG 10](https://raw.githubusercontent.com/StarGate01/paraview-dev/master/test/images/results/dg_10.png)
 
 **First of all, any help is appreciated!**
@@ -9,8 +11,10 @@
 
 - [x] Initial implementation
 - [x] First tests
+- [x] Tests with multiple attributes and vector sizes
 - [x] Large-scale tests with HDF5
-- [ ] Feedback from the community
+- [x] Feedback from the community
+- [x] Release candidate after bugfixing
 - [ ] Merge into VTK mainline
 - [ ] Use in ParaView mainline
 - [ ] Update XDMF3 documentation
