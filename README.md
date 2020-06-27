@@ -172,9 +172,9 @@ The compiled AppImage will be in `$(pwd)/release`, and include all dependencies 
 
 # Download
 
-A precompiled AppImage can be found here: https://syncandshare.lrz.de/getlink/fiJDmXw6f2aVLhsXUj3mbia4/paraview-5.8.0-xdmf3-highorder-release-x86_64.AppImage
+A precompiled AppImage can be found here: https://syncandshare.lrz.de/getlink/fiJDmXw6f2aVLhsXUj3mbia4/paraview-5.8.0-xdmf3-highorder-release-x86_64.AppImage .
 
-It will be updated when ever it is deemed necessary, and this URL will change.
+A docker image (e.g. for servers) can be found here: https://hub.docker.com/r/stargate01/pv-v5.8.0-osmesa-py3-xdmf3-highorder .
 
 ## Demo files
 
